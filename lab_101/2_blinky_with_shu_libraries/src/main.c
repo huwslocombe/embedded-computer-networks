@@ -18,10 +18,8 @@
 #include "clock.h"
 #include "gpio.h"
 
-// map the leds to GPIO PI1, GPIO PB_14, and GPIO PB_15 (again, this is the inbuilt led)
-gpio_pin_t led1 = {PI_1, GPIOI, GPIO_PIN_1};
-gpio_pin_t led2 = {PB_14, GPIOB, GPIO_PIN_14};
-gpio_pin_t led3 = {PB_15, GPIOB, GPIO_PIN_15};
+// map the led to GPIO PI1 (again, this is the inbuilt led)
+gpio_pin_t led = {PI_1, GPIOI, GPIO_PIN_1};
 
 // this is the main method
 int main()
@@ -32,35 +30,15 @@ int main()
   init_sysclk_216MHz();
   
   // initialise the gpio pins
-  init_gpio(led1, OUTPUT);
-	init_gpio(led2, OUTPUT);
-	init_gpio(led3, OUTPUT);
+  init_gpio(led, OUTPUT);
   
   // loop forever ...
   while(1)
   {
     // toggle the led on the gpio pin
-    write_gpio(led1,HIGH);
-		HAL_Delay(5000);
-		
-		write_gpio(led2,HIGH);
-		HAL_Delay(1000);
-		toggle_gpio(led2);
-		HAL_Delay(1000);
-		toggle_gpio(led2);
-		HAL_Delay(1000);
-		toggle_gpio(led2);
-		HAL_Delay(1000);
-		toggle_gpio(led2);
-		HAL_Delay(1000);
-		toggle_gpio(led2);
-		HAL_Delay(1000);
-	
-		write_gpio(led1,LOW);
-		
-		write_gpio(led3,HIGH);
-		HAL_Delay(5000);
-		write_gpio(led3,LOW);
-     
+    toggle_gpio(led);
+    
+    // wait for 1 second
+    HAL_Delay(1000);
   }
 }
